@@ -1,0 +1,64 @@
+# Welcome to Serverless!
+#
+# This file is the main config file for your service.
+# It's very minimal at this point and uses default values.
+# You can always add more config options for more control.
+# We've included some commented out config examples here.
+# Just uncomment any of them to get that config option.
+#
+# For full config options, check the docs:
+#    docs.serverless.com
+#
+# Happy Coding!
+
+service: multiclouddeploymentsmsapp
+
+# You can pin your service to only deploy with a specific Serverless version
+# Check out our docs for more details
+frameworkVersion: '2'
+
+provider:
+  name: azure
+  region: West US 2
+  runtime: nodejs12
+  # os: windows  # windows is default, linux is available
+  # prefix: "sample"  # prefix of generated resource name
+  # subscriptionId: A356AC8C-E310-44F4-BF85-C7F29044AF99
+  # stage: dev
+  # type: premium  # premium azure functions
+
+  environment: # these will be created as application settings
+    TWILIO_ACCOUNT_SID: 'ACdc1fd55f19071f4b54d7331c9fcc17f1'
+    TWILIO_AUTH_TOKEN: '9d5731f32bdb600ff92d5af670e78afe'
+    TWILIO_PHONE_NUMBER: '+19073121186'
+
+
+plugins: # look for additional plugins in the community plugins repo: https://github.com/serverless/plugins
+  - serverless-azure-functions
+
+# you can add packaging information here
+package:
+  patterns:
+    # - '!exclude-me.js'
+    # - '!exclude-me-dir/**'
+    - '!local.settings.json'
+    - '!.vscode/**'
+    # - include-me.js
+    # - include-me-dir/**
+
+functions:
+  sendsms:
+    handler: src/handlers/hello.send
+    events:
+      - http: true
+        methods:
+          - POST
+        authLevel: anonymous # can also be `function` or `admin`
+
+  goodbye:
+    handler: src/handlers/goodbye.sayGoodbye
+    events:
+      - http: true
+        methods:
+          - GET
+        authLevel: anonymous

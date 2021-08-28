@@ -1,0 +1,25 @@
+service: multicloud-sms-serverless-functions
+
+plugins:
+  - serverless-offline
+
+frameworkVersion: '2'
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  lambdaHashingVersion: 20201221
+  stage: dev
+  region: us-east-1
+  environment:
+    TWILIO_ACCOUNT_SID: SID-FROM-TWILLIO-DASH-BOARD
+    TWILIO_AUTH_TOKEN: AUTHO-FROM-TWILLIO-DASH-BOARD
+    TWILIO_PHONE_NUMBER: +19071111111 # TWILLIO PHONE FOR YOU ACCOUNT -FROM-TWILLIO-DASH-BOARD
+
+functions:
+  send-sms:
+    handler: handler.send
+    events:
+      - http:
+          path: send
+          method: post
